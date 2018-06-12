@@ -58,7 +58,7 @@ const users = {
     userName: 'user123',
   },
   4: {
-    id: 3,
+    id: 4,
     name: 'John Doe',
     userName: 'user123',
   },
@@ -97,6 +97,29 @@ const movies = {
   },
 };
 
+function FavoriteMovies({ profiles, users, movies }){
+  	// Schema to use to build each list item :  profile => movies and users
+  	// template: `${name}'s favorite movie is ${movie}.`
+	return (
+    	<div>
+      		<h2>Favorite Movies</h2>
+      		<ul>
+      			{profiles.map(({ id, userID, favoriteMovieID }) => {
+    				
+      				// 1. get this userID in users
+      				const { name } = users[userID];
+       				// 2. get this favoriteMovieID in movies
+    				const { name: movieTitle } = movies[favoriteMovieID];
+      
+      				return (
+                    	<li>{`${name}'s favorite movie is ${movieTitle}`}</li>
+                    );
+    			})}
+      		</ul>
+      	</div>
+    );
+} // Favorite Movies
+
 class App extends Component {
   render() {
     return (
@@ -105,7 +128,11 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">ReactND - Coding Practice</h1>
         </header>
-        <h2>Favorite Movies</h2>
+        <FavoriteMovies
+      		profiles={profiles}
+      		movies={movies}
+      		users={users}
+      />
       </div>
     );
   }
